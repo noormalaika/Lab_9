@@ -1,0 +1,287 @@
+AIR UNIVERSITY ISLAMABAD – KAMRA CAMPUS  
+DEPARTMENT OF COMPUTER SCIENCE
+
+CS-402L: DATA SCIENCE LAB  
+LAB 09 – MACHINE LEARNING REGRESSION
+
+==================================================
+TASK 1 – ESTIMATE HOUSING PRICES NEAR TRANSIT
+==================================================
+
+Dataset: UCI Real Estate Valuation  
+Total Observations: 414  
+Algorithm: Linear Regression
+
+Objective:
+To predict house price per unit area using the distance to the nearest MRT station.
+
+Input Feature:
+Distance to the nearest MRT station, converted into units of 100 metres.
+
+Target:
+House price of unit area.
+
+Results:
+
+Slope: -0.7262051618149454
+
+Intercept: 45.85142705777498
+
+Predicted Price at 500 Metres: 42.22040124870025
+
+Interpretation:
+
+The slope is approximately -0.73, indicating a negative relationship between distance from the nearest MRT station and house price.
+
+For every additional 100 metres from the MRT station, the predicted house price per unit area decreases by approximately 0.73 price units.
+
+At a distance of 500 metres, the model predicts a house price of approximately 42.22 units of 10,000 New Taiwan dollars per ping.
+
+The scatter plot shows the actual observations, while the fitted regression line represents the relationship predicted by the Linear Regression model.
+
+
+==================================================
+TASK 2 – COMPARE MODELS FOR YACHT RESISTANCE
+==================================================
+
+Dataset: UCI Yacht Hydrodynamics  
+Total Observations: 308
+
+Objective:
+To predict residuary resistance per unit displacement weight using the Froude number and compare Linear Regression with Quadratic Polynomial Regression.
+
+Input Feature:
+Froude number (sixth column).
+
+Target:
+Residuary resistance per unit displacement weight (seventh column).
+
+Models Used:
+1. Linear Regression
+2. Quadratic Polynomial Regression (Degree 2)
+
+Cross-Validation:
+5-fold shuffled cross-validation  
+Random State: 42  
+Evaluation Metric: RMSE
+
+LINEAR REGRESSION RESULTS:
+
+Fold 1 RMSE: 8.1604
+
+Fold 2 RMSE: 10.5685
+
+Fold 3 RMSE: 9.8397
+
+Fold 4 RMSE: 8.3839
+
+Fold 5 RMSE: 7.7777
+
+Mean RMSE: 8.946015434057767
+
+
+QUADRATIC POLYNOMIAL REGRESSION RESULTS:
+
+Fold 1 RMSE: 3.9335
+
+Fold 2 RMSE: 4.5949
+
+Fold 3 RMSE: 4.4468
+
+Fold 4 RMSE: 4.4931
+
+Fold 5 RMSE: 3.5038
+
+Mean RMSE: 4.19442228125383
+
+
+MODEL COMPARISON:
+
+Linear Regression Mean RMSE: 8.9460
+
+Quadratic Regression Mean RMSE: 4.1944
+
+Selected Model: Quadratic Polynomial Regression
+
+Interpretation:
+
+The Quadratic Polynomial Regression model performs better than the Linear Regression model because it achieves a lower mean RMSE.
+
+The linear model has a mean RMSE of approximately 8.95, whereas the quadratic model achieves approximately 4.19.
+
+This indicates that the quadratic model captures the relationship between Froude number and yacht resistance more effectively than the linear model.
+
+The same five shuffled folds were used for both models to ensure a fair comparison.
+
+
+==================================================
+TASK 3 – TUNE A CONCRETE STRENGTH MODEL
+==================================================
+
+Dataset: UCI Concrete Compressive Strength
+
+Objective:
+To predict concrete compressive strength in MPa using seven concrete ingredients and curing age.
+
+Input Features:
+1. Cement
+2. Blast Furnace Slag
+3. Fly Ash
+4. Water
+5. Superplasticizer
+6. Coarse Aggregate
+7. Fine Aggregate
+8. Age
+
+Target:
+Concrete compressive strength (MPa).
+
+
+PART (A) – DATA PREPROCESSING AND BASELINE MODEL
+
+Duplicate Removal:
+
+Original observations: 1030
+
+Observations after removing duplicates: 1005
+
+Dataset Shape After Duplicate Removal: (1005, 9)
+
+Training Observations: 804
+
+Testing Observations: 201
+
+Data Splitting:
+80% Training Data  
+20% Testing Data  
+Random State: 42
+
+Baseline Model: Linear Regression
+
+Cross-Validation:
+5-fold shuffled cross-validation  
+Random State: 42  
+Evaluation Metric: RMSE
+
+Baseline Mean CV RMSE: 10.201933364148456 MPa
+
+Interpretation:
+
+Duplicate records were removed before splitting the dataset. The remaining 1005 observations were divided into 804 training rows and 201 testing rows.
+
+The Linear Regression baseline achieved a mean cross-validation RMSE of approximately 10.20 MPa.
+
+
+PART (B) – HYPERPARAMETER TUNING
+
+Pipeline Components:
+
+1. PolynomialFeatures
+2. StandardScaler
+3. Ridge Regression
+
+Hyperparameters Tested:
+
+Polynomial Degrees: [1, 2, 3]
+
+Ridge Alpha Values: [0.01, 0.1, 1, 10, 100]
+
+Total Combinations Tested: 15
+
+GridSearchCV was used with five-fold cross-validation to identify the best combination of hyperparameters.
+
+Best Parameters:
+
+Polynomial Degree: 3
+
+Ridge Alpha: 0.1
+
+Tuned Mean CV RMSE: 6.0938710644995675 MPa
+
+
+TOP THREE HYPERPARAMETER SETTINGS:
+
+Rank 1:
+Polynomial Degree: 3
+Ridge Alpha: 0.10
+Mean CV RMSE: 6.093871 MPa
+
+Rank 2:
+Polynomial Degree: 3
+Ridge Alpha: 0.01
+Mean CV RMSE: 6.163518 MPa
+
+Rank 3:
+Polynomial Degree: 3
+Ridge Alpha: 1.00
+Mean CV RMSE: 6.273778 MPa
+
+
+PART (C) – TEST SET EVALUATION
+
+The best model selected through GridSearchCV was evaluated on the test dataset.
+
+Test RMSE: 6.5166954477327135 MPa
+
+Test MAE: 4.669687606907962 MPa
+
+Interpretation:
+
+The tuned model achieved a test RMSE of approximately 6.52 MPa and a test MAE of approximately 4.67 MPa.
+
+The actual versus predicted scatter plot compares the model's predictions with the actual concrete strength values.
+
+The reference line (y = x) represents perfect predictions. Points closer to this line indicate more accurate predictions.
+
+
+PART (D) – MODEL COMPARISON AND EXPLANATION
+
+Model Comparison:
+
+Linear Regression Baseline Mean CV RMSE:
+10.201933364148456 MPa
+
+Tuned Polynomial Ridge Mean CV RMSE:
+6.0938710644995675 MPa
+
+Improvement in Mean CV RMSE:
+4.108062299648888 MPa
+
+Interpretation:
+
+The tuned Polynomial Ridge model performs better than the Linear Regression baseline.
+
+The mean CV RMSE decreased from approximately 10.20 MPa to 6.09 MPa, showing an improvement of approximately 4.11 MPa.
+
+Degree-2 Interaction Term:
+
+One example of a degree-2 interaction term is:
+
+Cement × Water
+
+This term represents the combined relationship between cement and water quantities and their possible effect on concrete compressive strength.
+
+Purpose of StandardScaler Inside the Pipeline:
+
+StandardScaler is included inside the pipeline to prevent data leakage during cross-validation.
+
+It ensures that the scaling parameters are calculated using only the training portion of each fold. This prevents information from the validation data from influencing the training process.
+
+
+==================================================
+OVERALL CONCLUSION
+==================================================
+
+In this lab, three regression tasks were implemented using Python and Scikit-learn.
+
+Task 1 used Linear Regression to predict housing prices based on distance from the nearest MRT station.
+
+Task 2 compared Linear Regression and Quadratic Polynomial Regression for yacht resistance prediction. Quadratic Polynomial Regression achieved a lower mean RMSE and performed better.
+
+Task 3 used PolynomialFeatures, StandardScaler, Ridge Regression and GridSearchCV to tune a concrete strength prediction model. The tuned model achieved a lower mean cross-validation RMSE than the Linear Regression baseline.
+
+Overall, the experiments demonstrated the use of regression, cross-validation, model comparison, hyperparameter tuning and performance evaluation in machine learning.
+
+==================================================
+END OF LAB 09
+==================================================
